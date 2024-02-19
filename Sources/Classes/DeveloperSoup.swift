@@ -20,11 +20,11 @@ struct DeveloperSoup {
             throw DeveloperSoupError.invalidArticle
         }
 
-        guard let usernameElement = try article.select("p.f4 > a").first() else {
+        guard let usernameElement = try article.select("h1.h3 > a").first() else {
             throw DeveloperSoupError.invalidUsernameElement
         }
 
-        let username = try usernameElement.text()
+        let username = try usernameElement.attr("href").replacingOccurrences(of: "/", with: "")
 
         guard let userURL = URL(string: "https://api.github.com/users/\(username)") else {
             throw DeveloperSoupError.invalidURL
